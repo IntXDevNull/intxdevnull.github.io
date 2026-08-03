@@ -796,7 +796,46 @@ setInterval(
 ()=>{
 
 refreshData();
+async function refreshData(){
 
+    let button =
+    document.querySelector(".controls button");
+
+    button.innerText="⏳ Loading";
+
+
+    try {
+
+        let liveArticles =
+        await loadRSSFeeds();
+
+
+        if(liveArticles.length){
+
+            articles =
+            liveArticles;
+
+            updateStats();
+            renderArticles();
+
+        }
+
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Feed loading failed:",
+            error
+        );
+
+    }
+
+
+    button.innerText="🔄 Refresh";
+
+}
 },
 
 60*60*1000
