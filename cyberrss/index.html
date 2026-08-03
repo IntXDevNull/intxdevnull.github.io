@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SOC Dashboard</title>
+
+<style>
+:root {
+    --bg:#080d16;
+    --panel:#111827;
+    --panel2:#162033;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --blue:#22d3ee;
+    --red:#ef4444;
+    --orange:#f97316;
+    --green:#22c55e;
+}
+
+* {
+    box-sizing:border-box;
+}
+
+body {
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:
+        Inter,
+        Segoe UI,
+        Arial,
+        sans-serif;
+}
+
+
+/* HEADER */
+
+header {
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    background:#020617;
+    border-bottom:1px solid #1e293b;
+}
+
+.logo {
+    font-size:22px;
+    font-weight:bold;
+    color:var(--blue);
+}
+
+.controls button {
+    background:var(--panel2);
+    color:white;
+    border:1px solid #334155;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.controls button:hover {
+    border-color:var(--blue);
+}
+
+
+/* MAIN */
+
+.container {
+    padding:20px;
+}
+
+
+/* CARDS */
+
+.cards {
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
+}
+
+
+.card {
+    background:var(--panel);
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #1e293b;
+}
+
+
+.card h3 {
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.card p {
+    font-size:32px;
+    margin:10px 0 0;
+    color:var(--blue);
+}
+
+
+
+/* SEARCH */
+
+.search {
+    margin:25px 0;
+}
+
+
+input {
+    width:100%;
+    padding:14px;
+    background:var(--panel);
+    color:white;
+    border:1px solid #334155;
+    border-radius:8px;
+    font-size:16px;
+}
+
+
+
+/* NEWS */
+
+.news {
+    background:var(--panel);
+    border-radius:12px;
+    border:1px solid #1e293b;
+    overflow:hidden;
+}
+
+
+.news-header {
+    padding:15px;
+    font-size:18px;
+    font-weight:bold;
+    border-bottom:1px solid #334155;
+}
+
+
+.article {
+    padding:15px;
+    border-bottom:1px solid #1e293b;
+}
+
+
+.article:hover {
+    background:var(--panel2);
+}
+
+
+.article a {
+    color:var(--blue);
+    text-decoration:none;
+    font-size:17px;
+}
+
+
+.meta {
+    color:var(--muted);
+    font-size:13px;
+    margin-top:5px;
+}
+
+
+.badge {
+    display:inline-block;
+    padding:3px 8px;
+    border-radius:20px;
+    font-size:12px;
+    margin-left:5px;
+}
+
+
+.critical {
+    background:var(--red);
+}
+
+.high {
+    background:var(--orange);
+}
+
+.normal {
+    background:#2563eb;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+header {
+    flex-direction:column;
+    height:auto;
+    padding:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<header>
+
+<div class="logo">
+🛡 SOC Dashboard
+</div>
+
+
+<div class="controls">
+
+<button onclick="refreshData()">
+🔄 Refresh
+</button>
+
+
+<button onclick="toggleTheme()">
+🌙
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="cards">
+
+
+<div class="card">
+<h3>Total Articles</h3>
+<p id="totalArticles">0</p>
+</div>
+
+
+<div class="card">
+<h3>Critical Alerts</h3>
+<p id="criticalCount">0</p>
+</div>
+
+
+<div class="card">
+<h3>High Severity</h3>
+<p id="highCount">0</p>
+</div>
+
+
+<div class="card">
+<h3>Sources</h3>
+<p id="sourceCount">0</p>
+</div>
+
+
+</section>
+
+
+<div class="search">
+
+<input
+id="search"
+placeholder="Search security news..."
+onkeyup="searchArticles()">
+
+</div>
+
+
+<section class="news">
+
+<div class="news-header">
+Latest Security Intelligence
+</div>
+
+
+<div id="newsList"></div>
+
+
+</section>
+
+
+</div>
