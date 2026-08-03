@@ -842,7 +842,234 @@ async function refreshData(){
 
 );
 
+////////////////////////////////////////////////////
+// RSS ENGINE
+////////////////////////////////////////////////////
 
+
+async function loadRSSFeeds(){
+
+
+const rssSources = [
+
+{
+name:"Krebs",
+url:
+"https://krebsonsecurity.com/feed/"
+},
+
+{
+name:"BleepingComputer",
+url:
+"https://www.bleepingcomputer.com/feed/"
+},
+
+{
+name:"The Hacker News",
+url:
+"https://feeds.feedburner.com/TheHackersNews"
+},
+
+{
+name:"SANS ISC",
+url:
+"https://isc.sans.edu/rssfeed.xml"
+}
+
+];
+
+
+
+let results=[];
+
+
+
+for(
+let feed of rssSources
+){
+
+
+try{
+
+
+let api =
+
+"https://api.rss2json.com/v1/api.json?rss_url="
+
++
+encodeURIComponent(
+feed.url
+);
+
+
+
+let response =
+await fetch(api);
+
+
+
+let data =
+await response.json();
+
+
+
+data.items
+.slice(0,10)
+.forEach(
+item=>{
+
+
+results.push({
+
+title:
+item.title,
+
+
+source:
+feed.name,
+
+
+date:
+new Date(
+item.pubDate
+)
+.toLocaleDateString(),
+
+
+category:
+detectCategory(
+item.title
+),
+
+
+severity:
+detectSeverity(
+item.title
+),
+
+
+url:
+item.link
+
+
+});
+
+
+});
+
+
+}
+
+catch(e){
+
+console.log(
+"Feed failed:",
+feed.name
+);
+
+}
+
+
+}
+
+
+
+return results.sort(
+(a,b)=>
+new Date(b.date)
+-
+new Date(a.date)
+);
+
+
+}
+
+
+
+
+////////////////////////////////////////////////////
+// SECURITY CLASSIFICATION
+////////////////////////////////////////////////////
+
+
+function detectSeverity(text){
+
+
+text =
+text.toLowerCase();
+
+
+
+if(
+text.includes("critical")
+||
+text.includes("zero-day")
+||
+text.includes("actively exploited")
+)
+
+return "critical";
+
+
+
+if(
+text.includes("cve")
+||
+text.includes("ransomware")
+||
+text.includes("exploit")
+||
+text.includes("malware")
+)
+
+return "high";
+
+
+
+return "normal";
+
+
+}
+
+
+
+
+function detectCategory(text){
+
+
+text =
+text.toLowerCase();
+
+
+
+if(text.includes("cve"))
+return "CVE";
+
+
+if(text.includes("ransomware"))
+return "Ransomware";
+
+
+if(text.includes("cloud"))
+return "Cloud";
+
+
+if(
+text.includes("linux")
+)
+return "Linux";
+
+
+if(
+text.includes("windows")
+)
+return "Windows";
+
+
+return "Security";
+
+
+}
 </script>
 
 
