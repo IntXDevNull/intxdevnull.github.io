@@ -1,117 +1,43 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sandbox Login</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    background: #f4f6f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.login-card {
-    width: 360px;
-    background: #fff;
-    padding: 35px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.1);
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    margin-bottom: 6px;
-    color: #555;
-    font-size: 14px;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-}
-
-input:focus {
-    border-color: #0066cc;
-    outline: none;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    background: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #0052a3;
-}
-
-.links {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.links a {
-    color: #0066cc;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.links a:hover {
-    text-decoration: underline;
-}
-</style>
+<title>Login</title>
+<link rel="stylesheet" href="/authentication/css/edigard.css">
 </head>
 <body>
-
-<div class="login-card">
-    <h2>Sandbox Login</h2>
-
-    <form>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="Enter your email">
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password">
-        </div>
-
-        <button type="submit">Sign In</button>
-
-        <div class="links">
-            <a href="#">Forgot password?</a>
-        </div>
-    </form>
-</div>
-
+	<div class="flex">
+		<a href="/authentication/login"> <img id="logo"
+			src="/authentication/images/Orbyt_Logo.svg" alt="OrbytLogo" />
+		</a>
+	</div>
+	<div class="flex">
+		<div id="login">
+			<div>
+				<h2>Login</h2>
+			</div>
+			<!-- tag::thAction[] -->
+			<form method="POST" action="/authentication/login" id="loginForm"><input type="hidden" name="_csrf" value="6Hpo5Cqwymxh91VSfAeOxtC7NVw-6nq-_YpNQEjCOyyp3BDd3UlRhhqC-V9MwWNqHiq6_uSNGD5YiBmTyrl7cCqmCxyd7XTo"/>
+				<!-- end::thAction[] -->
+				<input type="hidden" name="_csrf"
+					value="6Hpo5Cqwymxh91VSfAeOxtC7NVw-6nq-_YpNQEjCOyyp3BDd3UlRhhqC-V9MwWNqHiq6_uSNGD5YiBmTyrl7cCqmCxyd7XTo" /> <label for="username">User name</label> <input
+					type="text" name="username" id="username" autofocus /> <label
+					for="password">Password</label> <input
+					type="password" name="password" id="password" />
+				<div>
+					<input class="btn" type="submit" value="Login" />
+				</div>
+			</form>
+            <div>
+                <a href="/authentication/oauth2/authorization/azure">
+                    <input class="btn" type="button" value="Microsoft"/>
+                </a>
+            </div>
+		</div>
+	</div>
+	<div class="flex">
+        
+    </div>
 </body>
 </html>
