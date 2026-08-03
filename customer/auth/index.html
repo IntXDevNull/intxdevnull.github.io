@@ -1,43 +1,158 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
-<link rel="stylesheet" href="/authentication/css/edigard.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test1234 Login</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #c0007a;
+    margin-bottom: 35px;
+}
+
+.logo-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#c0007a,#ff73c8);
+    position: relative;
+}
+
+.logo-circle::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 42px;
+    background: white;
+    left: 13px;
+    transform: rotate(-25deg);
+}
+
+.logo h1 {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.login-box {
+    width: 700px;
+    border: 2px solid #d60084;
+    border-radius: 18px;
+    padding: 55px 70px;
+    background: white;
+}
+
+.login-box h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 35px;
+}
+
+label {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+input {
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #bcbcbc;
+    padding: 0 15px;
+    font-size: 16px;
+    margin-bottom: 42px;
+}
+
+button {
+    width: 100%;
+    height: 54px;
+    border: none;
+    border-radius: 30px;
+    background: #f3cde6;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 22px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #ebbadb;
+}
+
+@media (max-width: 800px) {
+    .login-box {
+        width: 92%;
+        padding: 35px;
+    }
+
+    .logo h1 {
+        font-size: 36px;
+    }
+}
+</style>
 </head>
+
 <body>
-	<div class="flex">
-		<a href="/authentication/login"> <img id="logo"
-			src="/authentication/images/Orbyt_Logo.svg" alt="OrbytLogo" />
-		</a>
-	</div>
-	<div class="flex">
-		<div id="login">
-			<div>
-				<h2>Login</h2>
-			</div>
-			<!-- tag::thAction[] -->
-			<form method="POST" action="/authentication/login" id="loginForm"><input type="hidden" name="_csrf" value="6Hpo5Cqwymxh91VSfAeOxtC7NVw-6nq-_YpNQEjCOyyp3BDd3UlRhhqC-V9MwWNqHiq6_uSNGD5YiBmTyrl7cCqmCxyd7XTo"/>
-				<!-- end::thAction[] -->
-				<input type="hidden" name="_csrf"
-					value="6Hpo5Cqwymxh91VSfAeOxtC7NVw-6nq-_YpNQEjCOyyp3BDd3UlRhhqC-V9MwWNqHiq6_uSNGD5YiBmTyrl7cCqmCxyd7XTo" /> <label for="username">User name</label> <input
-					type="text" name="username" id="username" autofocus /> <label
-					for="password">Password</label> <input
-					type="password" name="password" id="password" />
-				<div>
-					<input class="btn" type="submit" value="Login" />
-				</div>
-			</form>
-            <div>
-                <a href="/authentication/oauth2/authorization/azure">
-                    <input class="btn" type="button" value="Microsoft"/>
-                </a>
-            </div>
-		</div>
-	</div>
-	<div class="flex">
-        
-    </div>
+
+<div class="logo">
+    <div class="logo-circle"></div>
+    <h1>Test1234</h1>
+</div>
+
+<div class="login-box">
+
+    <h2>Login</h2>
+
+    <form>
+
+        <label for="username">User name</label>
+        <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder=""
+        >
+
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=""
+        >
+
+        <button type="submit">Login</button>
+
+        <button type="button">Microsoft</button>
+
+    </form>
+
+</div>
+
 </body>
 </html>
