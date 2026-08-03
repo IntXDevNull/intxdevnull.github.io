@@ -290,3 +290,522 @@ Latest Security Intelligence
 
 
 </div>
+<script>
+
+////////////////////////////////////////////////////
+// SOC DASHBOARD DATA ENGINE
+////////////////////////////////////////////////////
+
+
+const feeds = [
+
+{
+source:"Krebs on Security",
+url:"https://krebsonsecurity.com/feed/"
+},
+
+{
+source:"BleepingComputer",
+url:"https://www.bleepingcomputer.com/feed/"
+},
+
+{
+source:"The Hacker News",
+url:"https://feeds.feedburner.com/TheHackersNews"
+},
+
+{
+source:"SANS ISC",
+url:"https://isc.sans.edu/rssfeed.xml"
+},
+
+{
+source:"Cisco Talos",
+url:"https://blog.talosintelligence.com/feeds/posts/default"
+}
+
+];
+
+
+
+////////////////////////////////////////////////////
+// TEMP DATA
+// Replaced with RSS in Part 3
+////////////////////////////////////////////////////
+
+
+let articles = [
+
+{
+title:
+"Critical vulnerability discovered in enterprise software",
+source:
+"Krebs on Security",
+date:
+"Today",
+category:
+"CVE",
+severity:
+"critical",
+url:
+"#"
+},
+
+
+{
+title:
+"New ransomware campaign targets Windows systems",
+source:
+"BleepingComputer",
+date:
+"Today",
+category:
+"Ransomware",
+severity:
+"high",
+url:
+"#"
+},
+
+
+{
+title:
+"Google Project Zero publishes browser exploit research",
+source:
+"Google Project Zero",
+date:
+"Yesterday",
+category:
+"Zero-Day",
+severity:
+"high",
+url:
+"#"
+},
+
+
+{
+title:
+"Cloud security best practices for organizations",
+source:
+"Cloudflare",
+date:
+"Yesterday",
+category:
+"Cloud",
+severity:
+"normal",
+url:
+"#"
+}
+
+];
+
+
+
+////////////////////////////////////////////////////
+// INITIAL LOAD
+////////////////////////////////////////////////////
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+loadBookmarks();
+
+renderArticles();
+
+updateStats();
+
+}
+
+);
+
+
+
+////////////////////////////////////////////////////
+// RENDER ARTICLES
+////////////////////////////////////////////////////
+
+
+function renderArticles(list=articles){
+
+
+const container =
+document.getElementById(
+"newsList"
+);
+
+
+container.innerHTML="";
+
+
+list.forEach(
+(article,index)=>{
+
+
+let bookmark =
+isBookmarked(article.title)
+?
+"⭐"
+:
+"☆";
+
+
+
+container.innerHTML += `
+
+
+<div class="article">
+
+
+<a href="${article.url}" target="_blank">
+
+${article.title}
+
+</a>
+
+
+<span class="badge ${article.severity}">
+
+${article.severity.toUpperCase()}
+
+</span>
+
+
+<div class="meta">
+
+${article.source}
+|
+${article.date}
+|
+${article.category}
+
+
+<button
+onclick="bookmarkArticle(${index})"
+style="
+float:right;
+background:none;
+border:0;
+color:#22d3ee;
+cursor:pointer;
+">
+
+${bookmark}
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+});
+
+
+}
+
+
+
+
+////////////////////////////////////////////////////
+// SEARCH
+////////////////////////////////////////////////////
+
+
+function searchArticles(){
+
+
+let query =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+
+
+let filtered =
+articles.filter(
+a=>
+
+a.title
+.toLowerCase()
+.includes(query)
+
+||
+
+a.source
+.toLowerCase()
+.includes(query)
+
+||
+
+a.category
+.toLowerCase()
+.includes(query)
+
+);
+
+
+
+renderArticles(filtered);
+
+
+}
+
+
+
+
+////////////////////////////////////////////////////
+// STATISTICS
+////////////////////////////////////////////////////
+
+
+function updateStats(){
+
+
+document
+.getElementById("totalArticles")
+.innerText =
+articles.length;
+
+
+
+document
+.getElementById("criticalCount")
+.innerText =
+articles.filter(
+a=>a.severity==="critical"
+)
+.length;
+
+
+
+document
+.getElementById("highCount")
+.innerText =
+articles.filter(
+a=>a.severity==="high"
+)
+.length;
+
+
+
+document
+.getElementById("sourceCount")
+.innerText =
+new Set(
+articles.map(
+a=>a.source
+)
+)
+.size;
+
+
+}
+
+
+
+
+////////////////////////////////////////////////////
+// BOOKMARKS
+////////////////////////////////////////////////////
+
+
+let bookmarks=[];
+
+
+
+function loadBookmarks(){
+
+
+bookmarks =
+JSON.parse(
+localStorage.getItem(
+"socBookmarks"
+)
+)
+||
+[];
+
+}
+
+
+
+
+function bookmarkArticle(index){
+
+
+let article =
+articles[index];
+
+
+let exists =
+bookmarks.some(
+b=>b.title===article.title
+);
+
+
+
+if(exists){
+
+
+bookmarks =
+bookmarks.filter(
+b=>b.title!==article.title
+);
+
+
+}
+else{
+
+
+bookmarks.push(article);
+
+
+}
+
+
+
+localStorage.setItem(
+"socBookmarks",
+JSON.stringify(bookmarks)
+);
+
+
+renderArticles();
+
+
+}
+
+
+
+
+function isBookmarked(title){
+
+
+return bookmarks.some(
+b=>b.title===title
+);
+
+
+}
+
+
+
+////////////////////////////////////////////////////
+// REFRESH
+////////////////////////////////////////////////////
+
+
+function refreshData(){
+
+
+let button =
+event.target;
+
+
+button.innerText =
+"⏳ Loading";
+
+
+setTimeout(()=>{
+
+
+updateStats();
+
+renderArticles();
+
+
+button.innerText =
+"🔄 Refresh";
+
+
+},800);
+
+
+}
+
+
+
+
+////////////////////////////////////////////////////
+// THEME
+////////////////////////////////////////////////////
+
+
+function toggleTheme(){
+
+
+if(
+document.body.dataset.light
+){
+
+
+document.body.dataset.light="";
+
+
+document.documentElement.style
+.setProperty(
+"--bg",
+"#080d16"
+);
+
+
+}
+else{
+
+
+document.body.dataset.light="yes";
+
+
+document.documentElement.style
+.setProperty(
+"--bg",
+"#f1f5f9"
+);
+
+
+document.documentElement.style
+.setProperty(
+"--text",
+"#020617"
+);
+
+
+}
+
+
+}
+
+
+
+////////////////////////////////////////////////////
+// AUTO REFRESH TIMER
+////////////////////////////////////////////////////
+
+
+setInterval(
+
+()=>{
+
+refreshData();
+
+},
+
+60*60*1000
+
+);
+
+
+</script>
+
+
+</body>
+</html>
