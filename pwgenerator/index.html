@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="card">
+    <h1>Password Generator</h1>
+
+    <div class="output-row">
+      <input type="text" id="passwordOutput" readonly aria-label="Generated password">
+      <button id="copyBtn" title="Copy to clipboard">📋</button>
+    </div>
+
+    <div class="strength-row">
+      <div class="strength-bar" id="strengthBar"></div>
+      <span id="strengthLabel">—</span>
+    </div>
+
+    <div class="option-row">
+      <label for="lengthInput">Length</label>
+      <input type="range" id="lengthSlider" min="4" max="128" value="16">
+      <input type="number" id="lengthInput" min="4" max="128" value="16">
+    </div>
+
+    <div class="preset-row">
+      <button class="preset-btn" data-preset="easy">Easy</button>
+      <button class="preset-btn" data-preset="medium">Medium</button>
+      <button class="preset-btn" data-preset="strong">Strong</button>
+    </div>
+
+    <fieldset class="options">
+      <legend>Custom Options</legend>
+      <label><input type="checkbox" id="optUpper" checked> Uppercase (A-Z)</label>
+      <label><input type="checkbox" id="optLower" checked> Lowercase (a-z)</label>
+      <label><input type="checkbox" id="optNumbers" checked> Numbers (0-9)</label>
+      <label><input type="checkbox" id="optSymbols"> Symbols (!@#$...)</label>
+      <label><input type="checkbox" id="optExcludeAmbiguous"> Exclude ambiguous (O,0,l,I,1)</label>
+      <label><input type="checkbox" id="optNoRepeat"> Avoid repeated characters</label>
+    </fieldset>
+
+    <button id="generateBtn" class="generate-btn">Generate Password</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
