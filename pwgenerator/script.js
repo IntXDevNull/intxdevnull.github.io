@@ -4,8 +4,11 @@ const LOWER = "abcdefghijklmnopqrstuvwxyz";
 const NUMBERS = "0123456789";
 const SYMBOLS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 const AMBIGUOUS = "O0lI1";
-const EASY_WORDS = ["tiger","river","cloud","stone","maple","ocean","flame","brave",
-  "gentle","silver","forest","meadow","spark","echo","raven","cedar","amber","coral"];
+const WORDLIST_FILE = "wordlist.txt";
+const WORD_SEPARATOR = "-";
+
+let wordList = [];
+let wordListLoaded = false;
 
 // Cache DOM elements
 const el = {
@@ -25,16 +28,46 @@ const el = {
   presetBtns: document.querySelectorAll(".preset-btn")
 };
 
-// Get a cryptographically secure random integer in [0, max)
+// Load the word list from wordlist.txt (one word per line)
+async function loadWordList() {
+  try {
+    const response = await fetch(WORDLIST_FILE);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const text = await response.text();
+    wordList = text.split("\n").map(w => w.trim()).filter(w => w.length > 0);
+    wordListLoaded = wordList.length > 0;
+  } catch (err) {
+    console.error("Failed to load wordlist.txt:", err);
+    wordListLoaded = false;
+  }
+
+  if (!wordListLoaded) {
+    const easyBtn = document.querySelector('[data-preset="easy"]');
+    easyBtn.disabled = true;
+    easyBtn.title = "wordlist.txt could not be loaded";
+  }
+}
+
+// Get a cryptographically secure random integer in [0, max), unbiased
 function secureRandomInt(max) {
+  const range = Math.floor(0xFFFFFFFF / max) * max; // largest multiple of max <= 2^32
   const array = new Uint32Array(1);
-  crypto.getRandomValues(array);
-  return array[0] % max;
+  let value;
+  do {
+    crypto.getRandomValues(array);
+    value = array[0];
+  } while (value >= range); // reject values that would cause modulo bias
+  return value % max;
 }
 
 // Pick one random character from a string
 function randomChar(str) {
   return str[secureRandomInt(str.length)];
+}
+
+// Pick one random word from the loaded word list
+function randomWord() {
+  return wordList[secureRandomInt(wordList.length)];
 }
 
 // Build the character pool based on selected options
@@ -51,7 +84,7 @@ function buildCharPool() {
   return pool;
 }
 
-// Generate a "medium" style password from letters + numbers
+// Generate a "medium/strong" style password from the custom char pool
 function generateStandardPassword(length, pool, noRepeat) {
   if (!pool) return "";
   let result = "";
@@ -68,28 +101,44 @@ function generateStandardPassword(length, pool, noRepeat) {
   return result;
 }
 
-// Generate an easy, pronounceable password from word list + numbers
-function generateEasyPassword(length) {
-  let result = "";
-  while (result.length < length) {
-    result += randomChar(EASY_WORDS);
-    if (result.length < length) {
-      result += secureRandomInt(10); // add a digit between words
-    }
+// Generate an easy, word-based passphrase: word+digit-word+digit...
+// Fills words until adding another would exceed the target length.
+function generateEasyPassword(targetLength) {
+  if (!wordListLoaded) return "";
+
+  let parts = [];
+  let currentLength = 0;
+
+  while (true) {
+    const word = randomWord();
+    const digit = secureRandomInt(10);
+    const chunk = word + digit;
+    const addedLength = chunk.length + (parts.length > 0 ? WORD_SEPARATOR.length : 0);
+
+    if (currentLength + addedLength > targetLength && parts.length > 0) break;
+
+    parts.push(chunk);
+    currentLength += addedLength;
+
+    if (currentLength >= targetLength) break;
   }
-  return result.slice(0, length);
+
+  return parts.join(WORD_SEPARATOR);
 }
 
 // Main generate function, reads current UI state
 function generatePassword() {
   const length = parseInt(el.lengthInput.value, 10);
   const noRepeat = el.noRepeat.checked;
-
-  // "Easy" mode overrides custom pool with word-based generation
   const isEasyMode = document.querySelector(".preset-btn.active")?.dataset.preset === "easy";
 
   let password;
   if (isEasyMode) {
+    if (!wordListLoaded) {
+      el.output.value = "Word list unavailable";
+      updateStrength("");
+      return;
+    }
     password = generateEasyPassword(length);
   } else {
     const pool = buildCharPool();
@@ -132,10 +181,11 @@ function updateStrength(password) {
 
 // Apply a preset's option configuration
 function applyPreset(preset) {
+  if (preset === "easy" && !wordListLoaded) return; // guard against disabled button
+
   el.presetBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.preset === preset));
 
   if (preset === "easy") {
-    // Word-based mode; checkboxes are irrelevant but reset for clarity
     el.upper.checked = false;
     el.lower.checked = true;
     el.numbers.checked = true;
@@ -163,7 +213,7 @@ function syncLength(value) {
 
 // Copy password to clipboard
 async function copyPassword() {
-  if (!el.output.value || el.output.value === "Select at least one option") return;
+  if (!el.output.value || el.output.value.startsWith("Select") || el.output.value.startsWith("Word list")) return;
   try {
     await navigator.clipboard.writeText(el.output.value);
     const original = el.copyBtn.textContent;
@@ -198,5 +248,5 @@ el.presetBtns.forEach(btn => {
   btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
 });
 
-// Initial generation on page load
-applyPreset("medium");
+// Initial load: fetch word list, then generate default password
+loadWordList().then(() => applyPreset("medium"));
