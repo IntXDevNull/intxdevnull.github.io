@@ -1,2 +1,0 @@
-# intxdevnull.github.io
-Misc.
