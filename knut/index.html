@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN KNUT WE TRUST — The Unofficial Knut Shrine</title>
+<meta name="description" content="An unofficial, wildly over-the-top fan shrine for Twitch streamer Knut. Parody. Not affiliated with Knut or Twitch.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e10;
+    --bg-alt:#161619;
+    --bg-card:#1c1c20;
+    --red:#ef3340;
+    --navy:#3d6bff;
+    --gold:#f5c542;
+    --cream:#f3efe6;
+    --muted:#9b9ba3;
+    --line:#2a2a2f;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--red);color:#fff;}
+  a{color:inherit;}
+  img,svg{display:block;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:.6em;
+    margin-bottom:1rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width:1.6em;height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  h1,h2,h3{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    margin:0;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(14,14,16,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{
+    font-family:'Anton',sans-serif;
+    font-size:1.05rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:.5em;
+    white-space:nowrap;
+  }
+  .brand .flicker{display:inline-block;animation:flicker 2.6s infinite;}
+  .navlinks{display:flex;gap:22px;font-size:.82rem;letter-spacing:.03em;}
+  .navlinks a{
+    text-decoration:none;color:var(--muted);
+    text-transform:uppercase;font-weight:600;font-size:.74rem;letter-spacing:.08em;
+    transition:color .15s;
+  }
+  .navlinks a:hover{color:var(--gold);}
+  .navlinks{display:none;}
+  @media(min-width:760px){.navlinks{display:flex;}}
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:.76rem;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    padding:11px 18px;
+    border-radius:3px;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:.5em;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--red);color:#fff;box-shadow:0 0 0 rgba(239,51,64,0);}
+  .btn-primary:hover{box-shadow:0 8px 24px -6px rgba(239,51,64,.55);}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:88px 0 76px;
+    overflow:hidden;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 18%, rgba(245,197,66,.16), transparent 70%),
+      radial-gradient(ellipse 70% 40% at 50% 100%, rgba(61,107,255,.10), transparent 70%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .hero::before,.hero::after{
+    content:"";position:absolute;top:0;bottom:0;width:14px;
+    background:repeating-linear-gradient(45deg,var(--red) 0 10px, var(--cream) 10px 20px);
+    opacity:.12;
+  }
+  .hero::before{left:0;}
+  .hero::after{right:0;}
+  .glow-ring{
+    position:relative;
+    width:190px;height:190px;
+    margin:0 auto 28px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .glow-ring .ring{
+    position:absolute;inset:0;
+    border-radius:50%;
+    border:1px solid rgba(245,197,66,.35);
+    animation:pulse 3.2s ease-in-out infinite;
+  }
+  .glow-ring .ring.r2{inset:-22px;animation-delay:.6s;border-color:rgba(239,51,64,.25);}
+  .glow-ring .ring.r3{inset:-44px;animation-delay:1.2s;border-color:rgba(61,107,255,.2);}
+  .bicep{
+    font-size:84px;
+    filter:drop-shadow(0 0 24px rgba(245,197,66,.55)) drop-shadow(0 0 60px rgba(239,51,64,.25));
+    animation:flicker 2.6s infinite;
+  }
+  h1.title{
+    font-size:clamp(2.4rem,7vw,5.2rem);
+    line-height:.98;
+    color:var(--cream);
+  }
+  h1.title .accent{color:var(--red);}
+  .subtitle{
+    max-width:640px;margin:20px auto 0;
+    color:var(--muted);
+    font-size:1.05rem;
+  }
+  .hero-ctas{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+    margin-top:34px;
+  }
+  .devotion-note{
+    margin-top:14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.72rem;
+    color:var(--muted);
+    letter-spacing:.04em;
+  }
+
+  .counter-strip{
+    margin-top:56px;
+    border-top:1px dashed var(--line);
+    border-bottom:1px dashed var(--line);
+    padding:18px 0;
+  }
+  .counter-inner{
+    display:flex;flex-wrap:wrap;gap:10px 32px;justify-content:center;align-items:baseline;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .counter-item{text-align:center;}
+  .counter-num{
+    font-size:1.5rem;font-weight:700;color:var(--gold);
+    font-variant-numeric:tabular-nums;
+  }
+  .counter-label{
+    font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+    margin-top:2px;
+  }
+
+  /* ---------- SECTIONS GENERIC ---------- */
+  section{padding:80px 0;}
+  .section-head{max-width:640px;margin-bottom:48px;}
+  .section-head h2{font-size:clamp(1.7rem,4vw,2.6rem);}
+  .section-head p{color:var(--muted);margin-top:12px;font-size:1rem;}
+  .alt{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+
+  /* ---------- STATS ---------- */
+  .stat-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  @media(min-width:700px){.stat-grid{grid-template-columns:repeat(4,1fr);}}
+  .stat{
+    background:var(--bg);
+    padding:30px 20px;
+    text-align:center;
+  }
+  .stat .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:2.1rem;font-weight:700;color:var(--red);
+    display:block;
+  }
+  .stat .lbl{
+    margin-top:8px;font-size:.78rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.05em;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{border-left:2px solid var(--line);margin-left:10px;}
+  .tl-item{position:relative;padding:0 0 44px 32px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";position:absolute;left:-7px;top:4px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 4px var(--bg-alt), 0 0 14px rgba(245,197,66,.7);
+  }
+  .alt .tl-item::before{box-shadow:0 0 0 4px var(--bg-alt), 0 0 14px rgba(245,197,66,.7);}
+  section:not(.alt) .tl-item::before{box-shadow:0 0 0 4px var(--bg), 0 0 14px rgba(245,197,66,.7);}
+  .tl-year{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);
+    font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .tl-item h3{font-size:1.3rem;margin-top:6px;color:var(--cream);}
+  .tl-item p{color:var(--muted);margin-top:8px;max-width:600px;}
+  .tl-item .footnote{
+    display:block;margin-top:8px;font-size:.78rem;color:#6f6f78;font-style:italic;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  }
+  @media(min-width:700px){.gallery-grid{grid-template-columns:repeat(4,1fr);}}
+  .frame{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:6px;
+    border:1.5px dashed var(--line);
+    background:
+      repeating-linear-gradient(135deg, rgba(245,197,66,.05) 0 10px, transparent 10px 20px),
+      var(--bg-card);
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s;
+  }
+  .frame:hover{border-color:var(--gold);}
+  .frame img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .frame .empty{
+    text-align:center;padding:14px;color:var(--muted);
+  }
+  .frame .empty .icon{font-size:1.8rem;margin-bottom:8px;filter:grayscale(.2) opacity(.8);}
+  .frame .empty .label{
+    font-family:'JetBrains Mono',monospace;font-size:.68rem;
+    letter-spacing:.04em;text-transform:uppercase;line-height:1.5;
+  }
+  .frame .cap{
+    position:absolute;left:0;right:0;bottom:0;
+    background:linear-gradient(0deg, rgba(0,0,0,.75), transparent);
+    color:var(--cream);font-size:.72rem;padding:18px 10px 8px;
+    font-family:'JetBrains Mono',monospace;letter-spacing:.02em;
+    opacity:0;transition:opacity .15s;
+  }
+  .frame:hover .cap{opacity:1;}
+  .gallery-note{
+    margin-top:20px;font-size:.85rem;color:var(--muted);
+    border-left:2px solid var(--gold);padding-left:14px;
+  }
+  .gallery-note code{
+    background:var(--bg-card);padding:1px 6px;border-radius:3px;
+    font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--gold);
+  }
+
+  /* ---------- MEME WALL ---------- */
+  .meme-grid{
+    display:grid;grid-template-columns:1fr;gap:18px;
+  }
+  @media(min-width:640px){.meme-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(min-width:980px){.meme-grid{grid-template-columns:repeat(3,1fr);}}
+  .meme{
+    aspect-ratio:1/1;
+    border-radius:6px;
+    border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 50% 40%, rgba(245,197,66,.10), transparent 60%),
+      var(--bg-card);
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .meme::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, transparent 2px 4px);
+    pointer-events:none;
+  }
+  .meme .top,.meme .bottom{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:1.05rem;
+    line-height:1.15;
+    text-align:center;
+    color:#fff;
+    text-shadow:
+      -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000,
+      -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000,
+      0 2px 6px rgba(0,0,0,.6);
+    letter-spacing:.01em;
+  }
+  .meme .mid{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    font-size:2.6rem;
+  }
+  .meme .tag{
+    position:absolute;top:10px;right:12px;
+    font-family:'JetBrains Mono',monospace;font-size:.6rem;
+    color:var(--gold);letter-spacing:.08em;text-transform:uppercase;
+    opacity:.7;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{
+    display:grid;grid-template-columns:1fr;gap:18px;
+  }
+  @media(min-width:700px){.testi-grid{grid-template-columns:repeat(2,1fr);}}
+  .testi{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px;
+    position:relative;
+  }
+  .testi .stars{color:var(--gold);letter-spacing:.14em;font-size:.9rem;margin-bottom:10px;}
+  .testi p{color:var(--cream);font-size:.98rem;}
+  .testi .who{
+    margin-top:16px;display:flex;align-items:center;gap:10px;
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--muted);
+  }
+  .testi .who .dot{width:8px;height:8px;border-radius:50%;background:var(--red);}
+
+  /* ---------- RELICS ---------- */
+  .relic-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);
+  }
+  @media(min-width:700px){.relic-grid{grid-template-columns:repeat(3,1fr);}}
+  .relic{
+    background:var(--bg-alt);
+    padding:30px 24px;
+  }
+  .relic svg{width:30px;height:30px;stroke:var(--gold);margin-bottom:14px;}
+  .relic h3{font-family:'Work Sans',sans-serif;font-weight:700;text-transform:none;font-size:1rem;letter-spacing:0;color:var(--cream);}
+  .relic p{color:var(--muted);font-size:.86rem;margin-top:8px;}
+
+  /* ---------- PLEDGE / CTA ---------- */
+  .pledge{
+    text-align:center;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 0%, rgba(239,51,64,.14), transparent 65%),
+      var(--bg);
+  }
+  .pledge h2{font-size:clamp(1.9rem,5vw,3.2rem);max-width:760px;margin:0 auto;}
+  .pledge p{color:var(--muted);max-width:520px;margin:16px auto 0;}
+  .pledge-form{
+    max-width:420px;margin:32px auto 0;
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+  }
+  .pledge-form input[type=text]{
+    flex:1;min-width:220px;
+    background:var(--bg-card);border:1px solid var(--line);
+    color:var(--cream);padding:12px 14px;border-radius:3px;
+    font-family:'JetBrains Mono',monospace;font-size:.85rem;
+  }
+  .pledge-form input::placeholder{color:#6f6f78;}
+  .pledge-form input:focus,.btn:focus-visible,a:focus-visible,button:focus-visible{
+    outline:2px solid var(--gold);outline-offset:2px;
+  }
+  .pledge-status{
+    margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--gold);
+    min-height:1.2em;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0 60px;
+  }
+  .footer-inner{
+    display:flex;flex-direction:column;gap:18px;
+    font-size:.8rem;color:var(--muted);
+  }
+  @media(min-width:700px){.footer-inner{flex-direction:row;justify-content:space-between;align-items:flex-start;}}
+  footer .disclaimer{max-width:520px;line-height:1.6;}
+  footer a{color:var(--gold);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+
+  @keyframes flicker{
+    0%,100%{opacity:1;transform:scale(1);}
+    45%{opacity:.85;transform:scale(.98);}
+    50%{opacity:1;transform:scale(1.02);}
+    72%{opacity:.9;transform:scale(.99);}
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.5;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.04);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="flicker">💪</span> Church of Knut</div>
+    <nav class="navlinks">
+      <a href="#stats">Sacred Stats</a>
+      <a href="#saga">The Saga</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#memes">Memes</a>
+      <a href="#congregation">Congregation</a>
+      <a href="#relics">Relics</a>
+      <a href="#pledge">Pledge</a>
+    </nav>
+    <a class="btn btn-primary" href="https://www.twitch.tv/knut" target="_blank" rel="noopener">Watch Live</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="glow-ring">
+      <span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span>
+      <span class="bicep" aria-hidden="true">💪</span>
+    </div>
+    <div class="eyebrow" style="justify-content:center;">
+      <span></span>Unofficial · Unsanctioned · Unstoppable
+    </div>
+    <h1 class="title">IN <span class="accent">KNUT</span><br>WE TRUST</h1>
+    <p class="subtitle">
+      A shrine built by ordinary people who watched one Norwegian bodybuilder lift a barbell
+      on Twitch and decided their entire personality would now be this. Camp Knut alumnus.
+      Line-incident survivor. Wedding streamer. Full-time gains evangelist.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://www.twitch.tv/knut" target="_blank" rel="noopener">🔴 Follow The Prophet</a>
+      <a class="btn btn-ghost" href="https://www.twitch.tv/knut/about" target="_blank" rel="noopener">Read The Actual About Page</a>
+    </div>
+    <div class="devotion-note">this page will not shut up about him. you have been warned.</div>
+
+    <div class="counter-strip">
+      <div class="counter-inner">
+        <div class="counter-item">
+          <div class="counter-num" id="gainsCounter">0</div>
+          <div class="counter-label">Gains Generated (kg, allegedly)</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num" id="worshipTimer">00:00:00</div>
+          <div class="counter-label">Time You've Spent Worshipping</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num">0</div>
+          <div class="counter-label">Days Since Last Skipped Session</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num">∞</div>
+          <div class="counter-label">Ceiling On His Potential</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Sacred Stats</div>
+      <h2>Numbers the algorithm cannot explain</h2>
+      <p>Independently verified by absolutely no one. Believed by everyone here.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><span class="num">21+</span><span class="lbl">Years devoted to the iron temple</span></div>
+      <div class="stat"><span class="num">30</span><span class="lbl">Days of Camp Knut, The Great Awakening</span></div>
+      <div class="stat"><span class="num">48%</span><span class="lbl">Vote share that crowned a champion under his banner</span></div>
+      <div class="stat"><span class="num">1</span><span class="lbl">Wedding, one objection, zero regrets</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="saga">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The Sacred Timeline</div>
+      <h2>The saga, as scripture demands it be told</h2>
+      <p>Every legend needs a lore drop. Here's the abridged, extremely biased version.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2022 — The Founding</div>
+        <h3>Camp Knut Is Born</h3>
+        <p>A gym-bro fitness camp starts as a stream segment and ends up dragging half of
+          Twitch's biggest names into squat racks. Streamers who hadn't seen daylight in years
+          suddenly discover deadlifts exist. Peak positive content, by his own account.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2022 — TwitchCon Amsterdam</div>
+        <h3>The Line Incident</h3>
+        <p>Falsely accused of cutting a line he was directed into by staff. He offers to prove
+          it live, on stream, to the actual staff. The internet rules unanimously: he did
+          nothing wrong.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2023 — Las Vegas</div>
+        <h3>The Wedding Heard 'Round Livestream Fail</h3>
+        <p>He gets married on stream with Twitch's own CEO in attendance, and a fellow streamer
+          dramatically "objects" mid-ceremony for the bit. Chat combusts. Legend status: renewed.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Ongoing — The Return Arc</div>
+        <h3>Every Hiatus Is Just Act Two</h3>
+        <p>He's taken his lumps and his brief offline stretches like anyone in front of a camera
+          eventually does — including a real reminder that eyes belong on the road, not the chat.
+          Every single time, the temple reopens louder than before.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Sacred Gallery</div>
+      <h2>Frames waiting to be filled</h2>
+      <p>We're not allowed to just grab his photos off the internet and slap them on a fan
+        site — that's a copyright and likeness problem, not a vibes problem. So: empty frames,
+        ready for whatever screenshots and clips you actually have rights to use.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="frame">
+        <img src="images/gallery-1.jpg" alt="Add your own Camp Knut screenshot" loading="lazy" onerror="this.remove()">
+        <div class="empty"><div class="icon">🏋️</div><div class="label">Camp Knut<br>Day One</div></div>
+        <div class="cap">images/gallery-1.jpg</div>
+      </div>
+      <div class="frame">
+        <img src="images/gallery-2.jpg" alt="Add your own TwitchCon screenshot" loading="lazy" onerror="this.remove()">
+        <div class="empty"><div class="icon">🎪</div><div class="label">The Line<br>Incident</div></div>
+        <div class="cap">images/gallery-2.jpg</div>
+      </div>
+      <div class="frame">
+        <img src="images/gallery-3.jpg" alt="Add your own wedding screenshot" loading="lazy" onerror="this.remove()">
+        <div class="empty"><div class="icon">💍</div><div class="label">The<br>Wedding</div></div>
+        <div class="cap">images/gallery-3.jpg</div>
+      </div>
+      <div class="frame">
+        <img src="images/gallery-4.jpg" alt="Add your own stream clip screenshot" loading="lazy" onerror="this.remove()">
+        <div class="empty"><div class="icon">🔴</div><div class="label">Whatever's<br>Live Now</div></div>
+        <div class="cap">images/gallery-4.jpg</div>
+      </div>
+    </div>
+    <p class="gallery-note">
+      Drop your own images into an <code>images/</code> folder next to
+      <code>index.html</code>, named <code>gallery-1.jpg</code> through
+      <code>gallery-4.jpg</code> (or edit the <code>src</code> attributes to match your
+      filenames) — each frame fills in automatically and the placeholder icon disappears.
+      Only use images you own or have permission to use.
+    </p>
+  </div>
+</section>
+
+<section class="alt" id="memes">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Meme Wall</div>
+      <h2>Caption-only. Zero copyright infringement. Maximum unhinged.</h2>
+      <p>No stolen reaction images here — just the community's greatest hits, in words.</p>
+    </div>
+    <div class="meme-grid">
+      <div class="meme">
+        <span class="tag">TwitchCon 2022</span>
+        <div class="top">Staff: you cut the line</div>
+        <div class="mid">🎥</div>
+        <div class="bottom">Him: it's literally on stream</div>
+      </div>
+      <div class="meme">
+        <span class="tag">Las Vegas, 2023</span>
+        <div class="top">Officiant asks for objections</div>
+        <div class="mid">😳</div>
+        <div class="bottom">One (1) streamer takes it personally</div>
+      </div>
+      <div class="meme">
+        <span class="tag">Camp Knut</span>
+        <div class="top">"It's just a 30 day camp"</div>
+        <div class="mid">🏗️</div>
+        <div class="bottom">*builds six home gyms*</div>
+      </div>
+      <div class="meme">
+        <span class="tag">Every Stream</span>
+        <div class="top">Chat: gains time?</div>
+        <div class="mid">💪</div>
+        <div class="bottom">Him: gains time.</div>
+      </div>
+      <div class="meme">
+        <span class="tag">21+ Years Running</span>
+        <div class="top">Started lifting in the 2000s</div>
+        <div class="mid">📈</div>
+        <div class="bottom">Still hasn't skipped a session</div>
+      </div>
+      <div class="meme">
+        <span class="tag">This Website</span>
+        <div class="top">"It's just a fan page"</div>
+        <div class="mid">🕯️</div>
+        <div class="bottom">*builds an entire shrine*</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="congregation">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Congregation</div>
+      <h2>Testimonials from people who are, frankly, unwell about this</h2>
+      <p>Entirely fictional superfans. Any resemblance to your own chat history is your problem.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>I set a push notification for his stream title changes. I do not set push
+          notifications for my own family's birthdays.</p>
+        <div class="who"><span class="dot"></span> Ragnar, Bergen — Congregation Elder</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>I joined a gym because a man on the internet lifted a barbell at me through a webcam.
+          It worked. I have no notes.</p>
+        <div class="who"><span class="dot"></span> Sigrid, Oslo — Camp Knut Survivor, Season 1</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>My therapist asked what's been bringing me joy lately. I showed her a clip. She has
+          since also followed the channel.</p>
+        <div class="who"><span class="dot"></span> Anonymous Gym Rat, USA</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>People keep asking why I say "gains time" unprompted in business meetings. They will
+          understand eventually. We all do.</p>
+        <div class="who"><span class="dot"></span> Preben, Trondheim — First Pew, Every Stream</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="relics">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Relics Of The Temple</div>
+      <h2>Artifacts we would absolutely put in a museum</h2>
+      <p>Handle with reverence. Do not attempt to lift with your back.</p>
+    </div>
+    <div class="relic-grid">
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4M18 12h4M6 8v8M18 8v8M6 12h12"/></svg>
+        <h3>The Sacred Barbell</h3>
+        <p>Never once returned to the rack without a story attached.</p>
+      </div>
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.8 7.1 18.2l.9-5.5-4-3.9L9.5 8z"/></svg>
+        <h3>The Camp Knut Medal</h3>
+        <p>Awarded to 30 days of very public, very sweaty accountability.</p>
+      </div>
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg>
+        <h3>The Wedding Ring (Objection Overruled)</h3>
+        <p>Survived interruption. Vows still technically legally binding.</p>
+      </div>
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 3-3 3-3-3zM12 7l8-3-3 6zM12 7v13"/></svg>
+        <h3>The Line-Incident Wristband</h3>
+        <p>Proof he was exactly where staff told him to be. Vindication, laminated.</p>
+      </div>
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21c1-4 3-6 8-6s7 2 8 6M12 3a4 4 0 0 1 4 4v2a4 4 0 1 1-8 0V7a4 4 0 0 1 4-4z"/></svg>
+        <h3>The Protein Shaker Of Destiny</h3>
+        <p>Empty. Always empty. That is somehow the point.</p>
+      </div>
+      <div class="relic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 3"/></svg>
+        <h3>The 21-Year Clock</h3>
+        <p>Started counting before most of chat could legally lift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pledge" id="pledge">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">Join The Cult (It's Just A Follow Button)</div>
+    <h2>Take the pledge. Skip zero sessions.<br>Miss zero streams.</h2>
+    <p>Sign the sacred (extremely optional, purely decorative, not sent anywhere) pledge below,
+      then go do the one thing that actually matters: hit follow on the real channel.</p>
+    <form class="pledge-form" id="pledgeForm">
+      <input type="text" id="pledgeName" placeholder="Your name, disciple" required>
+      <button class="btn btn-primary" type="submit">Sign The Pledge</button>
+    </form>
+    <div class="pledge-status" id="pledgeStatus"></div>
+    <div class="hero-ctas" style="margin-top:30px;">
+      <a class="btn btn-primary" href="https://www.twitch.tv/knut" target="_blank" rel="noopener">🔴 Follow on Twitch</a>
+      <a class="btn btn-ghost" href="https://www.twitch.tv/subs/knut" target="_blank" rel="noopener">Subscribe</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="disclaimer">
+      This is an unofficial, entirely parody fan page made by enthusiastic strangers on the
+      internet. It is <strong>not affiliated with, endorsed by, or operated by</strong> Knut,
+      Twitch, or Amazon. All hyperbole is intentional. All love is real. For the actual channel,
+      visit <a href="https://www.twitch.tv/knut" target="_blank" rel="noopener">twitch.tv/knut</a>.
+    </div>
+    <div class="disclaimer">
+      Built with HTML, CSS, one (1) unhinged design brief, and zero (0) sponsorships.
+      <br><span id="year"></span> · Made by fans, for fans, forever slightly too excited about gains.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Live "gains" counter — a silly ever-increasing number, purely decorative.
+  (function(){
+    var el = document.getElementById('gainsCounter');
+    var value = 0;
+    setInterval(function(){
+      value += Math.floor(Math.random() * 40) + 5;
+      el.textContent = value.toLocaleString('en-US');
+    }, 220);
+  })();
+
+  // "Time spent worshipping" — real elapsed time since page load.
+  (function(){
+    var el = document.getElementById('worshipTimer');
+    var start = Date.now();
+    function pad(n){ return n.toString().padStart(2,'0'); }
+    setInterval(function(){
+      var s = Math.floor((Date.now() - start) / 1000);
+      var h = Math.floor(s / 3600);
+      var m = Math.floor((s % 3600) / 60);
+      var sec = s % 60;
+      el.textContent = pad(h) + ':' + pad(m) + ':' + pad(sec);
+    }, 1000);
+  })();
+
+  // Decorative pledge form — no backend, just vibes.
+  (function(){
+    var form = document.getElementById('pledgeForm');
+    var status = document.getElementById('pledgeStatus');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('pledgeName').value.trim() || 'Disciple';
+      status.textContent = '✅ ' + name + ' has joined the congregation. Now go press follow — that part is real.';
+      form.reset();
+    });
+  })();
+
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear();
+</script>
+
+</body>
+</html>
