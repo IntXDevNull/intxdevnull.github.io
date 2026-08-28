@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery &amp; Clips — In Knut We Trust</title>
+<meta name="description" content="Fan-uploaded pictures, memes, and legendary clips. Unofficial Knut fan page.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e10; --bg-alt:#161619; --bg-card:#1c1c20;
+    --red:#ef3340; --navy:#3d6bff; --gold:#f5c542; --cream:#f3efe6; --muted:#9b9ba3; --line:#2a2a2f;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--cream);
+    font-family:'Work Sans',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--red);color:#fff;}
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.6em;
+    margin-bottom:1rem;
+  }
+  .eyebrow::before{content:"";width:1.6em;height:1px;background:var(--gold);display:inline-block;}
+
+  h1,h2,h3{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    letter-spacing:.01em;margin:0;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(14,14,16,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{
+    font-family:'Anton',sans-serif;font-size:1.05rem;letter-spacing:.04em;
+    text-transform:uppercase;display:flex;align-items:center;gap:.5em;white-space:nowrap;
+    text-decoration:none;color:var(--cream);
+  }
+  .brand .flicker{display:inline-block;animation:flicker 2.6s infinite;}
+  .navlinks{display:none;gap:22px;}
+  @media(min-width:760px){.navlinks{display:flex;}}
+  .navlinks a{
+    text-decoration:none;color:var(--muted);text-transform:uppercase;font-weight:600;
+    font-size:.74rem;letter-spacing:.08em;transition:color .15s;
+  }
+  .navlinks a:hover,.navlinks a.active{color:var(--gold);}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.76rem;
+    letter-spacing:.05em;text-transform:uppercase;padding:11px 18px;border-radius:3px;
+    text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+    border:1px solid transparent;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
+    background:none;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--red);color:#fff;}
+  .btn-primary:hover{box-shadow:0 8px 24px -6px rgba(239,51,64,.55);}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- PAGE HEAD ---------- */
+  .pagehead{
+    padding:64px 0 40px;text-align:center;
+    background:radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,197,66,.13), transparent 70%);
+    border-bottom:1px solid var(--line);
+  }
+  .pagehead h1{font-size:clamp(2rem,6vw,3.4rem);}
+  .pagehead h1 .accent{color:var(--red);}
+  .pagehead p{color:var(--muted);max-width:560px;margin:16px auto 0;}
+  .pagehead-tabs{
+    margin-top:28px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  }
+  .pagehead-tabs a{
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted);text-decoration:none;
+    padding:9px 16px;border:1px solid var(--line);border-radius:20px;transition:all .15s;
+  }
+  .pagehead-tabs a:hover{color:var(--gold);border-color:var(--gold);}
+
+  section{padding:64px 0;}
+  .alt{background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .section-head{max-width:640px;margin-bottom:36px;}
+  .section-head h2{font-size:clamp(1.6rem,4vw,2.3rem);}
+  .section-head p{color:var(--muted);margin-top:12px;font-size:1rem;}
+
+  /* ---------- STATUS / EMPTY STATES ---------- */
+  .statebox{
+    border:1.5px dashed var(--line);border-radius:6px;padding:40px 24px;
+    text-align:center;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.85rem;
+  }
+  .statebox .icon{font-size:1.8rem;margin-bottom:12px;}
+  .statebox.err{border-color:rgba(239,51,64,.4);color:#f3a7ac;}
+  .statebox code{
+    background:var(--bg-card);padding:1px 6px;border-radius:3px;color:var(--gold);
+  }
+
+  /* ---------- GALLERY GRID ---------- */
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  }
+  @media(min-width:640px){.gallery-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(min-width:960px){.gallery-grid{grid-template-columns:repeat(4,1fr);}}
+  .g-item{
+    position:relative;aspect-ratio:1/1;border-radius:6px;overflow:hidden;
+    border:1px solid var(--line);background:var(--bg-card);cursor:zoom-in;
+  }
+  .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .25s ease;}
+  .g-item:hover img{transform:scale(1.06);}
+  .g-item .g-cap{
+    position:absolute;left:0;right:0;bottom:0;
+    background:linear-gradient(0deg, rgba(0,0,0,.8), transparent);
+    color:var(--cream);font-size:.68rem;padding:16px 8px 6px;
+    font-family:'JetBrains Mono',monospace;
+    opacity:0;transition:opacity .15s;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .g-item:hover .g-cap{opacity:1;}
+
+  .gallery-toolbar{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+    margin-bottom:22px;
+  }
+  .gallery-toolbar .count{
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);
+  }
+  .refresh-btn{
+    font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);
+    background:none;border:1px solid var(--line);border-radius:3px;padding:7px 12px;
+    cursor:pointer;text-transform:uppercase;letter-spacing:.04em;
+  }
+  .refresh-btn:hover{color:var(--gold);border-color:var(--gold);}
+
+  .source-config{
+    margin-top:24px;padding:18px 20px;border:1px solid var(--line);border-radius:6px;
+    background:var(--bg-card);
+  }
+  .source-config summary{
+    cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.78rem;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.04em;
+  }
+  .source-config summary:hover{color:var(--gold);}
+  .source-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+  .source-row > div{flex:1;min-width:140px;}
+  .source-row label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;
+  }
+  .source-row input{
+    width:100%;background:var(--bg);border:1px solid var(--line);color:var(--cream);
+    padding:9px 11px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.82rem;
+  }
+  .source-row input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(6,6,7,.92);
+    display:none;align-items:center;justify-content:center;z-index:100;padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(92vw,1000px);max-height:86vh;border-radius:6px;object-fit:contain;}
+  .lightbox .lb-cap{
+    position:absolute;bottom:24px;left:0;right:0;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--muted);
+  }
+  .lightbox .lb-close{
+    position:absolute;top:20px;right:24px;background:none;border:1px solid var(--line);
+    color:var(--cream);border-radius:50%;width:40px;height:40px;font-size:1.1rem;cursor:pointer;
+  }
+  .lightbox .lb-close:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- CLIPS ---------- */
+  .clip-grid{
+    display:grid;grid-template-columns:1fr;gap:22px;
+  }
+  @media(min-width:700px){.clip-grid{grid-template-columns:repeat(2,1fr);}}
+  .clip-card{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  }
+  .clip-frame-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;}
+  .clip-frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .clip-meta{padding:14px 16px;}
+  .clip-meta h3{
+    font-family:'Work Sans',sans-serif;font-weight:700;text-transform:none;
+    font-size:.95rem;color:var(--cream);
+  }
+  .clip-meta p{color:var(--muted);font-size:.8rem;margin-top:4px;}
+
+  .code-note{
+    margin-top:20px;font-size:.85rem;color:var(--muted);
+    border-left:2px solid var(--gold);padding-left:14px;
+  }
+  .code-note code{
+    background:var(--bg-card);padding:1px 6px;border-radius:3px;
+    font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--gold);
+  }
+  pre{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+    padding:14px 16px;overflow-x:auto;font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;color:var(--cream);margin-top:14px;
+  }
+
+  footer{border-top:1px solid var(--line);padding:36px 0 56px;}
+  .footer-inner{font-size:.8rem;color:var(--muted);}
+  footer a{color:var(--gold);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+
+  @keyframes flicker{
+    0%,100%{opacity:1;transform:scale(1);}
+    45%{opacity:.85;transform:scale(.98);}
+    50%{opacity:1;transform:scale(1.02);}
+    72%{opacity:.9;transform:scale(.99);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="flicker">💪</span> Church of Knut</a>
+    <nav class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="#gallery" class="active">Gallery</a>
+      <a href="#clips">Clips</a>
+    </nav>
+    <a class="btn btn-primary" href="https://www.twitch.tv/knut" target="_blank" rel="noopener">Watch Live</a>
+  </div>
+</header>
+
+<div class="pagehead">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">Community Archive</div>
+    <h1>Gallery <span class="accent">&amp;</span> Clips</h1>
+    <p>Every image dropped into the <code style="color:var(--gold);">images/</code> folder shows
+      up here automatically — no manifest, no build step, just push and refresh. Plus a hall of
+      fame for the legendary stream moments.</p>
+    <div class="pagehead-tabs">
+      <a href="#gallery">🖼️ Photo &amp; Meme Gallery</a>
+      <a href="#clips">🎬 Legendary Clips</a>
+      <a href="index.html">← Back to the shrine</a>
+    </div>
+  </div>
+</div>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Photo &amp; Meme Gallery</div>
+      <h2>Whatever's in the folder, is on the wall</h2>
+      <p>This grid is pulled live from this repository's <code style="color:var(--gold);">images/</code>
+        folder using GitHub's public API. Add a file, commit, push — it shows up here on next load.</p>
+    </div>
+
+    <div class="gallery-toolbar">
+      <div class="count" id="galleryCount">Loading…</div>
+      <button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
+    </div>
+
+    <div id="galleryState"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+
+    <details class="source-config" id="sourceConfig">
+      <summary>Not loading correctly? Set the source repo manually</summary>
+      <p style="color:var(--muted);font-size:.82rem;margin-top:12px;">
+        This page auto-detects the GitHub username and repo from the URL when hosted on
+        GitHub Pages. If you're previewing locally, using a custom domain, or it just guessed
+        wrong, set it here (this only applies to your current visit — nothing is saved).
+      </p>
+      <div class="source-row">
+        <div>
+          <label for="cfgOwner">GitHub username / org</label>
+          <input type="text" id="cfgOwner" placeholder="e.g. your-username">
+        </div>
+        <div>
+          <label for="cfgRepo">Repository name</label>
+          <input type="text" id="cfgRepo" placeholder="e.g. knut-shrine">
+        </div>
+        <div>
+          <label for="cfgBranch">Branch</label>
+          <input type="text" id="cfgBranch" placeholder="main">
+        </div>
+      </div>
+      <button class="btn btn-ghost" id="cfgApply" style="margin-top:14px;">Load Gallery</button>
+    </details>
+  </div>
+</section>
+
+<section class="alt" id="clips">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Legendary Clips</div>
+      <h2>The hall of fame moments</h2>
+      <p>Real Twitch clips, embedded via Twitch's own official player — nothing downloaded or
+        rehosted here.</p>
+    </div>
+
+    <div id="clipsState"></div>
+    <div class="clip-grid" id="clipGrid"></div>
+
+    <div class="code-note">
+      To add a clip: grab the slug from its URL — <code>clips.twitch.tv/&lt;SLUG&gt;</code> or
+      the part after <code>?clip=</code> on a <code>twitch.tv/knut/clip/...</code> link — then
+      add it to the <code>CLIPS</code> list near the bottom of this page's
+      <code>&lt;script&gt;</code>:
+      <pre>const CLIPS = [
+  { slug: "AwkwardHelplessSalamanderSwiftRage", title: "Give it a real title" },
+  // add more objects here
+];</pre>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    Unofficial, parody fan content. Not affiliated with Knut, Twitch, or Amazon.
+    Actual channel: <a href="https://www.twitch.tv/knut" target="_blank" rel="noopener">twitch.tv/knut</a>.
+    <a href="index.html">← Back to the shrine</a>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<script>
+  const IMG_EXT = /\.(jpe?g|png|gif|webp|avif|svg)$/i;
+
+  // ---------- Auto-detect owner/repo/branch from the current GitHub Pages URL ----------
+  function detectSource(){
+    const host = window.location.hostname;      // e.g. "yourname.github.io"
+    const parts = window.location.pathname.split('/').filter(Boolean); // e.g. ["knut-shrine", "gallery.html"]
+    let owner = '', repo = '';
+    if (host.endsWith('.github.io')) {
+      owner = host.split('.')[0];
+      // Project page: yourname.github.io/repo-name/...  -> repo is first path segment
+      // User/org page: yourname.github.io/...            -> repo is "yourname.github.io"
+      repo = parts.length > 0 ? parts[0] : (owner + '.github.io');
+    }
+    return { owner, repo, branch: 'main' };
+  }
+
+  let SOURCE = detectSource();
+
+  const galleryGrid = document.getElementById('galleryGrid');
+  const galleryState = document.getElementById('galleryState');
+  const galleryCount = document.getElementById('galleryCount');
+
+  function showState(el, html, isErr){
+    el.innerHTML = '<div class="statebox' + (isErr ? ' err' : '') + '">' + html + '</div>';
+  }
+
+  async function loadGallery(){
+    galleryGrid.innerHTML = '';
+    galleryCount.textContent = 'Loading…';
+    showState(galleryState, '<div class="icon">🕯️</div>Fetching the archive…');
+
+    if (!SOURCE.owner || !SOURCE.repo) {
+      showState(galleryState,
+        '<div class="icon">⚙️</div>Couldn\'t work out the GitHub repo from this URL.<br>' +
+        'Use "Set the source repo manually" below.', true);
+      galleryCount.textContent = '';
+      return;
+    }
+
+    const apiUrl = 'https://api.github.com/repos/' + SOURCE.owner + '/' + SOURCE.repo +
+      '/contents/images?ref=' + encodeURIComponent(SOURCE.branch);
+
+    try {
+      const res = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github+json' } });
+
+      if (res.status === 404) {
+        showState(galleryState,
+          '<div class="icon">📭</div>No <code>images/</code> folder found yet in ' +
+          SOURCE.owner + '/' + SOURCE.repo + '.<br>Add one, drop some pictures in, and refresh.', true);
+        galleryCount.textContent = '';
+        return;
+      }
+      if (res.status === 403) {
+        showState(galleryState,
+          '<div class="icon">⏳</div>GitHub\'s public API rate limit was hit (60 requests/hour ' +
+          'without auth). Try again in a bit.', true);
+        galleryCount.textContent = '';
+        return;
+      }
+      if (!res.ok) {
+        showState(galleryState, '<div class="icon">⚠️</div>GitHub API error: ' + res.status, true);
+        galleryCount.textContent = '';
+        return;
+      }
+
+      const items = await res.json();
+      const images = (Array.isArray(items) ? items : [])
+        .filter(it => it.type === 'file' && IMG_EXT.test(it.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      if (images.length === 0) {
+        showState(galleryState,
+          '<div class="icon">🖼️</div>The <code>images/</code> folder is empty so far.<br>' +
+          'Drop in some pictures and memes, push, then hit refresh.', false);
+        galleryCount.textContent = '0 images';
+        return;
+      }
+
+      galleryState.innerHTML = '';
+      galleryCount.textContent = images.length + (images.length === 1 ? ' image' : ' images');
+
+      images.forEach(img => {
+        const item = document.createElement('div');
+        item.className = 'g-item';
+        item.innerHTML =
+          '<img src="' + img.download_url + '" alt="' + img.name + '" loading="lazy">' +
+          '<div class="g-cap">' + img.name + '</div>';
+        item.addEventListener('click', () => openLightbox(img.download_url, img.name));
+        galleryGrid.appendChild(item);
+      });
+    } catch (err) {
+      showState(galleryState,
+        '<div class="icon">⚠️</div>Couldn\'t reach the GitHub API right now (' + err.message + ').',
+        true);
+      galleryCount.textContent = '';
+    }
+  }
+
+  // ---------- Lightbox ----------
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  function openLightbox(src, cap){
+    lbImg.src = src;
+    lbImg.alt = cap;
+    lbCap.textContent = cap;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lbImg.src = '';
+  }
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // ---------- Manual source override (in-memory only, not persisted) ----------
+  document.getElementById('cfgApply').addEventListener('click', () => {
+    const owner = document.getElementById('cfgOwner').value.trim();
+    const repo = document.getElementById('cfgRepo').value.trim();
+    const branch = document.getElementById('cfgBranch').value.trim();
+    SOURCE = {
+      owner: owner || SOURCE.owner,
+      repo: repo || SOURCE.repo,
+      branch: branch || SOURCE.branch || 'main',
+    };
+    loadGallery();
+  });
+  document.getElementById('refreshBtn').addEventListener('click', loadGallery);
+
+  loadGallery();
+
+  // ---------- Legendary Clips ----------
+  // Add your own clips here. Grab the slug from a clip URL, e.g.
+  // https://clips.twitch.tv/SomeExampleSlugHere -> slug is "SomeExampleSlugHere".
+  const CLIPS = [
+    // { slug: "SomeExampleSlugHere", title: "Give it a title", note: "Optional context" },
+  ];
+
+  const clipGrid = document.getElementById('clipGrid');
+  const clipsState = document.getElementById('clipsState');
+
+  function renderClips(){
+    if (!CLIPS.length) {
+      showState(clipsState,
+        '<div class="icon">🎬</div>No clips added yet.<br>Edit the <code>CLIPS</code> array in ' +
+        'this page to add the community\'s greatest hits.', false);
+      return;
+    }
+    clipsState.innerHTML = '';
+    const parent = window.location.hostname || 'localhost';
+    CLIPS.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'clip-card';
+      const src = 'https://clips.twitch.tv/embed?clip=' + encodeURIComponent(c.slug) +
+        '&parent=' + encodeURIComponent(parent) + '&autoplay=false';
+      card.innerHTML =
+        '<div class="clip-frame-wrap"><iframe src="' + src +
+        '" allowfullscreen scrolling="no"></iframe></div>' +
+        '<div class="clip-meta"><h3>' + (c.title || c.slug) + '</h3>' +
+        (c.note ? '<p>' + c.note + '</p>' : '') + '</div>';
+      clipGrid.appendChild(card);
+    });
+  }
+  renderClips();
+</script>
+
+</body>
+</html>
