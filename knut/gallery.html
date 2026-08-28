@@ -235,16 +235,6 @@
 
     <div id="clipsState"></div>
     <div class="clip-grid" id="clipGrid"></div>
-
-    <div class="code-note">
-      To add a clip: grab the slug from its URL — <code>clips.twitch.tv/&lt;SLUG&gt;</code> or
-      the part after <code>?clip=</code> on a <code>twitch.tv/knut/clip/...</code> link — then
-      add it to the <code>CLIPS</code> array below the gallery one:
-      <pre>const CLIPS = [
-  { slug: "SomeExampleSlugHere", title: "Give it a real title", note: "Optional context" },
-  // add more objects here
-];</pre>
-    </div>
   </div>
 </section>
 
@@ -277,8 +267,6 @@
     { file: "knutfeet4.jpeg", caption: "Knuts feet" },
   ];
 
-  // Add an entry for every Twitch clip you want featured.
-  // slug = the part of a clip URL after clips.twitch.tv/ (or after ?clip=).
   const CLIPS = [
     { slug: "PrettyPrettyPastaStoneLightning-7pQXLtOu0Rdw5oBB", title: "Knut selling out", note: "Follow for more" },
     //{ slug: "SomeExampleSlugHere", title: "Give it a title", note: "Optional context" },
