@@ -169,7 +169,7 @@
 
   const footerLines = [
     ['', 'dim', 100],
-    ['guest@linuxlabs:~$ cat status.txt', 'prompt', 500],
+    ['guest@linuxlabs.dev:~$ cat status.txt', 'prompt', 500],
   ];
 
   let idx = 0;
@@ -221,7 +221,7 @@
       <div><span class="key">Kernel:</span> 0.0.1-pre-alpha</div>
       <div><span class="key">Uptime:</span> just booted</div>
       <div><span class="key">Packages:</span> 0 installed</div>
-      <div><span class="key">Shell:</span> /bin/patience</div>
+      <div><span class="key">Shell:</span> /bin/zsh</div>
       <div><span class="key">Resolution:</span> your imagination</div>
       <div><span class="key">DE:</span> none yet</div>
       <div><span class="key">Terminal:</span> you're looking at it</div>
@@ -253,7 +253,7 @@
     const csWrap = document.createElement('div');
     csWrap.className = 'line coming-soon bright';
     term.appendChild(csWrap);
-    const text = 'Coming soon.';
+    const text = 'Patience is a virtue.';
     let i = 0;
     const speed = 55;
     function step() {
@@ -271,7 +271,7 @@
     const footer = document.createElement('div');
     footer.className = 'footer';
     footer.style.opacity = '1';
-    footer.innerHTML = `linuxlabs.dev &middot; built in the open;`;
+    footer.innerHTML = `linuxlabs.dev © 2026`;
     term.appendChild(footer);
   }
   runBoot();
