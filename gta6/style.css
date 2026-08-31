@@ -1,0 +1,382 @@
+/* ==========================================================================
+   GTA VI Countdown — Stylesheet
+   Palette:
+     --void      #0a0512  (near-black background)
+     --deep      #1a0b2e  (deep purple)
+     --pink      #ff2d95  (neon pink)
+     --violet    #7b2ff7  (neon violet)
+     --orange    #ff6b35  (sunset orange)
+     --gold      #ffb347  (warm gold)
+     --paper     #fdf4ff  (off-white text)
+   ========================================================================== */
+
+:root {
+  --void: #0a0512;
+  --deep: #1a0b2e;
+  --pink: #ff2d95;
+  --violet: #7b2ff7;
+  --orange: #ff6b35;
+  --gold: #ffb347;
+  --paper: #fdf4ff;
+  --paper-dim: rgba(253, 244, 255, 0.68);
+
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Rajdhani', 'Segoe UI', sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--void);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Background scene — pure CSS sunset + synthwave horizon, no external assets
+   -------------------------------------------------------------------------- */
+
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 8%, #3a1152 0%, transparent 55%),
+    linear-gradient(180deg, #2a0e46 0%, #150a2e 38%, #0a0512 70%, #060309 100%);
+}
+
+.scene__sun {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  width: min(60vw, 620px);
+  height: min(60vw, 620px);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%,
+      var(--gold) 0%,
+      var(--orange) 35%,
+      var(--pink) 62%,
+      rgba(255, 45, 149, 0) 72%);
+  filter: blur(1px);
+  opacity: 0.85;
+  animation: sun-pulse 8s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 0.95; transform: translateX(-50%) scale(1.03); }
+}
+
+.scene__grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  background-image:
+    linear-gradient(to top, rgba(10, 5, 18, 1) 0%, rgba(10, 5, 18, 0) 55%),
+    repeating-linear-gradient(to right, rgba(255, 45, 149, 0.35) 0 2px, transparent 2px 80px),
+    repeating-linear-gradient(to top, rgba(123, 47, 247, 0.35) 0 1px, transparent 1px 60px);
+  -webkit-mask-image: linear-gradient(to top, black 0%, black 55%, transparent 100%);
+          mask-image: linear-gradient(to top, black 0%, black 55%, transparent 100%);
+  transform: perspective(300px) rotateX(55deg);
+  transform-origin: bottom;
+  opacity: 0.55;
+}
+
+.scene__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(2rem, 6vh, 4.5rem) 1.25rem 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Title block
+   -------------------------------------------------------------------------- */
+
+.hero__kicker {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  color: var(--paper-dim);
+}
+
+.hero__title {
+  margin: 0;
+  line-height: 0.9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hero__title-sub {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+  letter-spacing: 0.5em;
+  padding-left: 0.5em; /* optically balance the tracking */
+  color: var(--paper);
+}
+
+.hero__title-main {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(4.5rem, 20vw, 12rem);
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--orange) 32%, var(--pink) 62%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 40px rgba(255, 45, 149, 0.35));
+}
+
+.hero__subtitle {
+  margin: 1rem 0 3rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  color: var(--paper-dim);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   Countdown
+   -------------------------------------------------------------------------- */
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(4.4rem, 20vw, 8rem);
+  padding: clamp(0.9rem, 2.5vw, 1.6rem) 0.25rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 45, 149, 0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 20px 40px -20px rgba(123, 47, 247, 0.55);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.countdown__unit:hover {
+  border-color: rgba(255, 45, 149, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 22px 46px -18px rgba(255, 45, 149, 0.55);
+}
+
+.countdown__value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 8vw, 4rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--paper);
+  text-shadow: 0 0 24px rgba(255, 179, 71, 0.35);
+}
+
+.countdown__label {
+  margin-top: 0.5rem;
+  font-size: clamp(0.6rem, 1.6vw, 0.8rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--paper-dim);
+}
+
+.countdown__sep {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: rgba(255, 45, 149, 0.45);
+  transform: translateY(-0.6rem);
+}
+
+/* Released state */
+
+.released {
+  padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 6vw, 3.5rem);
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 179, 71, 0.4);
+  box-shadow: 0 25px 60px -25px rgba(255, 107, 53, 0.6);
+}
+
+.released__headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 7vw, 3.4rem);
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, var(--gold), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.released__sub {
+  margin: 0.75rem 0 0;
+  color: var(--paper-dim);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Release date + progress
+   -------------------------------------------------------------------------- */
+
+.release-date {
+  margin: 1.75rem 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--paper-dim);
+}
+
+.release-date time {
+  color: var(--paper);
+}
+
+.release-date__zone {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(253, 244, 255, 0.45);
+}
+
+.progress {
+  width: min(480px, 84vw);
+  margin: 2rem auto 0;
+}
+
+.progress__track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.progress__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--violet), var(--pink), var(--orange));
+  box-shadow: 0 0 16px rgba(255, 45, 149, 0.6);
+  transition: width 0.6s ease;
+}
+
+.progress__label {
+  margin: 0.65rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--paper-dim);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding: 1.75rem 1.25rem 2.25rem;
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.site-footer p {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(253, 244, 255, 0.42);
+}
+
+.site-footer__meta {
+  color: rgba(253, 244, 255, 0.3) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive tweaks
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .hero__title-sub {
+    letter-spacing: 0.32em;
+    padding-left: 0.32em;
+  }
+
+  .countdown {
+    gap: 0.4rem;
+  }
+
+  .countdown__unit {
+    width: 4.1rem;
+    padding: 0.75rem 0.15rem;
+    border-radius: 0.75rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    padding-top: 7vh;
+  }
+}
