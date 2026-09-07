@@ -63,7 +63,7 @@ h1{
   max-width: 54ch;
 }
 
-/* progress rail */
+
 .progress-rail{
   height: 2px;
   background: var(--line);
@@ -85,11 +85,11 @@ h1{
   font-variant-numeric: tabular-nums;
 }
 
-/* screens */
+
 .screen{ display: none; }
 .screen.active{ display: block; }
 
-/* start screen */
+
 #start-screen p{
   color: var(--ink-soft);
   line-height: 1.6;
@@ -132,7 +132,7 @@ h1{
   margin: 6px 0 0;
 }
 
-/* question card */
+
 .q-num{
   font-size: 0.85rem;
   color: var(--accent-ink);
@@ -281,7 +281,7 @@ button.secondary{
 }
 button.secondary:hover{ border-color: #b9b3a6; }
 
-/* results screen */
+
 .score-block{
   border: 1px solid var(--line);
   border-radius: var(--radius);
