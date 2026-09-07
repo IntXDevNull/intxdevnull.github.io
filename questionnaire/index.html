@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Acceptable Use — Comprehension Check</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="top">
+    <h1>AI Acceptable Use — Comprehension Check</h1>
+    <p class="sub">A short check to confirm you've read and understood the AI Acceptable Use Policy. Fifteen questions, no time limit.</p>
+  </header>
+
+  <!-- START -->
+  <section id="start-screen" class="screen active">
+    <p>Before you start:</p>
+    <ul>
+      <li>This runs entirely in your browser. Nothing is sent anywhere or logged as you go.</li>
+      <li>At the end you'll get a score and a short summary you can share with whoever asked you to complete this.</li>
+      <li>Answer based on the policy as written, not general assumptions about AI tools.</li>
+    </ul>
+    <div class="name-field">
+      <label for="name-input">Your name (for the result summary)</label>
+      <input type="text" id="name-input" placeholder="Optional — leave blank to stay anonymous" autocomplete="off">
+    </div>
+    <div class="actions">
+      <button class="primary" id="start-btn">Start check</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz-screen" class="screen">
+    <div class="progress-rail"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label"></div>
+
+    <div class="q-num" id="q-num"></div>
+    <p class="q-text" id="q-text"></p>
+    <div class="options" id="options"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="actions">
+      <button class="primary" id="next-btn" disabled>Next</button>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results-screen" class="screen">
+    <h1 style="font-size:1.3rem;">Result</h1>
+    <div class="score-block">
+      <p class="score-big" id="score-big"></p>
+      <p class="score-caption" id="score-caption"></p>
+      <span class="status-pill" id="status-pill"></span>
+    </div>
+
+    <div id="review-list" class="review-list"></div>
+
+    <div class="actions">
+      <button class="primary" id="download-btn">Download result summary</button>
+      <button class="secondary" id="restart-btn">Retake</button>
+    </div>
+  </section>
+
+</div>
+
+<footer class="foot">Result summary is generated locally and only leaves your device if you choose to download or share it.</footer>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
