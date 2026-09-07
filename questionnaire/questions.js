@@ -30,12 +30,12 @@ const QUESTIONS = [
       "A general meeting agenda"
     ],
     correct: 2,
-    explanation: "Credentials of any kind — passwords, PINs, VPN tokens, API keys — are off-limits for every AI tool, no exceptions."
+    explanation: "Credentials of any kind - passwords, PINs, VPN tokens, API keys - are off-limits for every AI tool, no exceptions."
   },
   {
     q: "For free or unlicensed use, what form must an AI tool take?",
     options: [
-      "A browser-based (web) application only — no installs, plugins, or integrations",
+      "A browser-based (web) application only - no installs, plugins, or integrations",
       "Any tool that accepts a work email address",
       "A desktop application is fine if it's from a known vendor",
       "A mobile app downloaded from an official app store"
@@ -49,7 +49,7 @@ const QUESTIONS = [
       "The AI vendor",
       "IT, automatically",
       "The employee who generated or is using the content",
-      "No one — AI output can be trusted as-is"
+      "No one - AI output can be trusted as-is"
     ],
     correct: 2,
     explanation: "Employees must review and validate AI output themselves, including checking that it doesn't itself leak confidential or personal data."
@@ -58,7 +58,7 @@ const QUESTIONS = [
     q: "Can an employee personally purchase or expense an AI tool for work purposes?",
     options: [
       "Yes, as long as it's under a certain budget",
-      "No — all paid AI tools must go through Orbyt's procurement and governance process",
+      "No - all paid AI tools must go through Orbyt's procurement and governance process",
       "Yes, but only for a one-time trial",
       "Yes, if it's later reported to a manager"
     ],
@@ -74,7 +74,7 @@ const QUESTIONS = [
       "Offer configurable retention settings"
     ],
     correct: 1,
-    explanation: "Approved services must not use company data to train or improve their models — a verified opt-out or equivalent contractual guarantee is required."
+    explanation: "Approved services must not use company data to train or improve their models - a verified opt-out or equivalent contractual guarantee is required."
   },
   {
     q: "Under GDPR, a personal data breach may need to be reported to the supervisory authority within how many hours?",
