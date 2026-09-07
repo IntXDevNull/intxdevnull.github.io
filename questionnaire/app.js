@@ -4,8 +4,7 @@
   const PASS_THRESHOLD = 0.8; // 80% to pass
 
   // All state lives in memory only. Nothing is written to localStorage,
-  // cookies, or any server. It disappears the moment the tab is closed,
-  // unless the person explicitly downloads their result summary.
+  // cookies, or any server. It disappears the moment the tab is closed.
   let current = 0;
   let answers = new Array(QUESTIONS.length).fill(null);
   let locked = false;
