@@ -1,7 +1,3 @@
-// Question bank for the AI Acceptable Use Policy comprehension check.
-// Each item: question, four options, index of the correct option, and a short
-// explanation shown as feedback after the person answers.
-
 const QUESTIONS = [
   {
     q: "If a piece of information hasn't been explicitly classified, how should it be treated by default?",
@@ -59,17 +55,6 @@ const QUESTIONS = [
     explanation: "Employees must review and validate AI output themselves, including checking that it doesn't itself leak confidential or personal data."
   },
   {
-    q: "Before running AI-generated code or commands against internal infrastructure, what must happen first?",
-    options: [
-      "Nothing — it can be run directly if it looks correct",
-      "It must be tested in a non-production environment first",
-      "It must be rewritten in a different programming language",
-      "It only needs a comment explaining what it does"
-    ],
-    correct: 1,
-    explanation: "AI-generated code or commands must be reviewed and tested in non-production before ever touching production systems."
-  },
-  {
     q: "Can an employee personally purchase or expense an AI tool for work purposes?",
     options: [
       "Yes, as long as it's under a certain budget",
@@ -90,17 +75,6 @@ const QUESTIONS = [
     ],
     correct: 1,
     explanation: "Approved services must not use company data to train or improve their models — a verified opt-out or equivalent contractual guarantee is required."
-  },
-  {
-    q: "Who must be consulted before an AI service is approved to process personal data?",
-    options: [
-      "Only the employee requesting it",
-      "The InfoSec Department and the Data Protection Officer (DPO)",
-      "The marketing team",
-      "No one — approval isn't required for personal data"
-    ],
-    correct: 1,
-    explanation: "InfoSec/DPO must be consulted before approval, and a Data Protection Impact Assessment (DPIA) completed where GDPR requires one."
   },
   {
     q: "Under GDPR, a personal data breach may need to be reported to the supervisory authority within how many hours?",
