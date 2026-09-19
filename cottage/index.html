@@ -1,1 +1,385 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Før hytten forlates</title>
+<meta name="description" content="Sjekkliste for gjester før hytten forlates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bitter:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDF0EB;
+    --paper: #FAFBF9;
+    --ink: #17211C;
+    --muted: #55635A;
+    --line: #CFD7CE;
+    --accent: #1F4A38;
+    --on-accent: #F4F8F4;
+    --done-bg: #E0EAE2;
+    --falu: #9A2F24;
+    --lake: #33677C;
+    --focus: #C27A00;
+    --serif: "Bitter", Georgia, "Times New Roman", serif;
+    --sans: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1712;
+      --paper: #16211A;
+      --ink: #E8EEE8;
+      --muted: #9CAAA1;
+      --line: #2B3A30;
+      --accent: #6FBF94;
+      --on-accent: #0D1A12;
+      --done-bg: #1B2A21;
+      --falu: #E58A7E;
+      --lake: #7FBAD1;
+      --focus: #F2B440;
+    }
+  }
 
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 42rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+  /* top bar */
+  .bar { display: flex; justify-content: flex-end; gap: .5rem; margin-bottom: 1.75rem; }
+  .seg { display: inline-flex; border: 2px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--paper); }
+  .seg button {
+    font: inherit; font-size: .95rem; font-weight: 700; color: var(--muted);
+    background: transparent; border: 0; padding: .4rem .9rem; cursor: pointer; min-height: 40px;
+  }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+  h1 {
+    font-family: var(--serif); font-weight: 800; font-size: clamp(2.2rem, 9vw, 3.4rem);
+    line-height: 1.05; margin: 0 0 .6rem; letter-spacing: -.01em;
+  }
+  .lead { margin: 0 0 1.75rem; color: var(--muted); max-width: 34rem; }
+
+  /* progress */
+  .progress { margin-bottom: 1.5rem; }
+  .progress-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .5rem; font-weight: 700; }
+  .progress-top .count { font-family: var(--serif); font-size: 1.25rem; }
+  .segments { display: flex; gap: 4px; }
+  .segments i { flex: 1; height: 12px; border-radius: 3px; background: var(--line); transition: background .2s; }
+  .segments i.on { background: var(--accent); }
+
+  /* season switch */
+  .season {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: .75rem 1rem; margin-bottom: 1rem; border: 2px dashed var(--line); border-radius: 10px;
+    font-size: 1rem; color: var(--muted);
+  }
+  .season strong { color: var(--ink); }
+
+  /* list */
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+  .item {
+    display: grid; grid-template-columns: 44px 1fr; gap: .9rem; align-items: start;
+    background: var(--paper); border: 2px solid var(--line); border-radius: 10px;
+    padding: 1rem; cursor: pointer; position: relative;
+    transition: background .15s, border-color .15s;
+  }
+  .item input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .box {
+    width: 44px; height: 44px; border-radius: 8px; border: 2.5px solid var(--accent);
+    display: grid; place-items: center; font-family: var(--serif); font-weight: 800; font-size: 1.15rem;
+    color: var(--accent); background: transparent; transition: background .15s, color .15s;
+  }
+  .box svg { display: none; width: 26px; height: 26px; }
+  .item input:checked ~ .box { background: var(--accent); color: var(--on-accent); }
+  .item input:checked ~ .box .num { display: none; }
+  .item input:checked ~ .box svg { display: block; }
+  .item:has(input:checked) { background: var(--done-bg); border-color: transparent; }
+  .item input:checked ~ .body .text { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .item input:focus-visible ~ .box { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .item.off { opacity: .55; cursor: default; }
+  .item.off input { cursor: default; }
+  .body { padding-top: .35rem; }
+  .text { display: block; }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+  .tag { font-size: .875rem; font-weight: 700; border: 2px solid currentColor; border-radius: 6px; padding: 0 .5rem; }
+  .tag.winter { color: var(--falu); }
+  .tag.year { color: var(--lake); }
+  .tag.skip { color: var(--muted); }
+
+  /* closing */
+  .closing {
+    margin-top: 2rem; padding: 1.5rem; border-radius: 10px; border: 2px solid var(--line);
+    background: var(--paper); text-align: left;
+  }
+  .closing h2 { font-family: var(--serif); font-size: 1.6rem; margin: 0 0 .25rem; }
+  .closing p { margin: 0; color: var(--muted); }
+  .closing.done { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .closing.done p { color: var(--on-accent); }
+  .closing .status { display: none; font-weight: 700; margin-bottom: .75rem; }
+  .closing.done .status { display: block; }
+
+  .reset {
+    margin-top: 1.25rem; font: inherit; font-weight: 700; color: var(--muted);
+    background: none; border: 2px solid var(--line); border-radius: 8px; padding: .55rem 1rem; cursor: pointer; min-height: 44px;
+  }
+  .reset:hover { color: var(--ink); border-color: var(--muted); }
+  button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Språk / Language">
+      <button type="button" data-lang="no" aria-pressed="true">Norsk</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+
+  <h1 id="title"></h1>
+  <p class="lead" id="lead"></p>
+
+  <section class="progress" aria-live="polite">
+    <div class="progress-top"><span id="progressLabel"></span><span class="count" id="count"></span></div>
+    <div class="segments" id="segments" aria-hidden="true"></div>
+  </section>
+
+  <div class="season">
+    <span id="seasonText"></span>
+    <div class="seg" role="group" id="seasonSeg">
+      <button type="button" data-winter="0" aria-pressed="false"></button>
+      <button type="button" data-winter="1" aria-pressed="false"></button>
+    </div>
+  </div>
+
+  <ol id="list"></ol>
+
+  <section class="closing" id="closing">
+    <div class="status" id="status"></div>
+    <h2 id="thanks"></h2>
+    <p id="thanksSub"></p>
+  </section>
+
+  <button type="button" class="reset" id="reset"></button>
+</main>
+
+<script>
+(function () {
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
+
+  var T = {
+    no: {
+      htmlLang: 'nb',
+      title: 'Før hytten forlates',
+      lead: 'Gå gjennom listen før dere låser og drar. Trykk på et punkt når det er gjort.',
+      progress: 'Fremdrift',
+      of: 'av',
+      done: 'gjort',
+      season: 'Hvilken årstid er det?',
+      summer: 'Sommerhalvåret',
+      winter: 'Vinterhalvåret',
+      yearRound: 'Gjelder hele året',
+      winterOnly: 'Gjelder vinterhalvåret',
+      skipped: 'Hoppes over nå',
+      thanks: 'TAKK, og god fornøyelse.',
+      thanksSub: 'Vi setter stor pris på at dere tar vare på hytten.',
+      status: 'Alt er gjort. Dere kan låse og dra.',
+      reset: 'Nullstill listen',
+      items: [
+        'Påse at begge dolokkene er lukket og at døra til gangen er skikkelig lukket.',
+        'Påse at begge de store ventilene i mønet står oppe.',
+        'Slå av solcellepanelet med ett trykk på av/på-knappen, slik at bare store lampe til venstre lyser.',
+        'Påse at kjøleskapdøren står på gløtt.',
+        'Tøm målebegeret med frostvæske i sluket på kjøkkenet.',
+        'Påse at alle vinduer er lukket.',
+        'At der er opptenningsved og ved inne før dere forlater hytta, og at der er like ryddig og rent som da dere kom.',
+        'Påse at trekken på ovnsdøra er helt lukket.',
+        'Sjekk at gassen er slått av.',
+        'Tøm ut vannet fra bøttene.'
+      ]
+    },
+    en: {
+      htmlLang: 'en',
+      title: 'Before leaving the cabin',
+      lead: 'Go through this list before you lock up and leave. Tap an item when it is done.',
+      progress: 'Progress',
+      of: 'of',
+      done: 'done',
+      season: 'Which season is it?',
+      summer: 'Summer half-year',
+      winter: 'Winter half-year',
+      yearRound: 'Applies all year',
+      winterOnly: 'Winter half-year only',
+      skipped: 'Skipped for now',
+      thanks: 'THANK YOU, and enjoy your time.',
+      thanksSub: 'We really appreciate you looking after the cabin.',
+      status: 'All done. You are ready to lock up and go.',
+      reset: 'Reset the list',
+      items: [
+        'Make sure both toilet lids are closed and the door to the hallway is properly shut.',
+        'Make sure both large vents in the roof ridge are open.',
+        'Switch off the solar panel with one press of the on/off button, so that only the large lamp on the left is lit.',
+        'Make sure the fridge door is left slightly ajar.',
+        'Pour the measuring cup of antifreeze into the kitchen drain.',
+        'Make sure all windows are closed.',
+        'Leave kindling and firewood indoors, and leave the cabin as tidy and clean as it was when you arrived.',
+        'Make sure the draft on the stove door is fully closed.',
+        'Check that the gas is switched off.',
+        'Empty the water out of the buckets.'
+      ]
+    }
+  };
+
+  // seasonal tags: item index -> 'year' | 'winter'
+  var SEASON = { 1: 'year', 4: 'winter' };
+
+  var KEY = 'hytte-sjekkliste-v1';
+  var autoWinter = (function () { var m = new Date().getMonth(); return m >= 9 || m <= 3; })(); // Oct to Apr
+  var state = { lang: 'no', checked: {}, winter: null };
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved && typeof saved === 'object') {
+      if (saved.lang === 'en' || saved.lang === 'no') state.lang = saved.lang;
+      if (saved.checked && typeof saved.checked === 'object') state.checked = saved.checked;
+      if (saved.winter === true || saved.winter === false) state.winter = saved.winter;
+    }
+  } catch (e) { /* storage unavailable, carry on */ }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function isWinter() { return state.winter === null ? autoWinter : state.winter; }
+  function isActive(i) { return !(SEASON[i] === 'winter' && !isWinter()); }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var list = $('list');
+
+  function render() {
+    var t = T[state.lang];
+    document.documentElement.lang = t.htmlLang;
+    document.title = t.title;
+    $('title').textContent = t.title;
+    $('lead').textContent = t.lead;
+    $('progressLabel').textContent = t.progress;
+    $('seasonText').textContent = t.season;
+    $('thanks').textContent = t.thanks;
+    $('thanksSub').textContent = t.thanksSub;
+    $('status').textContent = t.status;
+    $('reset').textContent = t.reset;
+
+    document.querySelectorAll('[data-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === state.lang));
+    });
+    var sb = document.querySelectorAll('#seasonSeg button');
+    sb[0].textContent = t.summer;
+    sb[1].textContent = t.winter;
+    sb[0].setAttribute('aria-pressed', String(!isWinter()));
+    sb[1].setAttribute('aria-pressed', String(isWinter()));
+
+    list.innerHTML = '';
+    t.items.forEach(function (text, i) {
+      var active = isActive(i);
+      var li = document.createElement('li');
+      var label = document.createElement('label');
+      label.className = 'item' + (active ? '' : ' off');
+
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = !!state.checked[i] && active;
+      input.disabled = !active;
+      input.addEventListener('change', function () {
+        state.checked[i] = input.checked;
+        save();
+        updateProgress();
+        label.className = 'item' + (active ? '' : ' off');
+      });
+
+      var box = document.createElement('span');
+      box.className = 'box';
+      box.setAttribute('aria-hidden', 'true');
+      box.innerHTML = '<span class="num">' + (i + 1) + '</span>' + CHECK;
+
+      var body = document.createElement('span');
+      body.className = 'body';
+      var tx = document.createElement('span');
+      tx.className = 'text';
+      tx.textContent = text;
+      body.appendChild(tx);
+
+      if (SEASON[i]) {
+        var tags = document.createElement('span');
+        tags.className = 'tags';
+        var tag = document.createElement('span');
+        tag.className = 'tag ' + SEASON[i];
+        tag.textContent = SEASON[i] === 'winter' ? t.winterOnly : t.yearRound;
+        tags.appendChild(tag);
+        if (!active) {
+          var skip = document.createElement('span');
+          skip.className = 'tag skip';
+          skip.textContent = t.skipped;
+          tags.appendChild(skip);
+        }
+        body.appendChild(tags);
+      }
+
+      label.appendChild(input);
+      label.appendChild(box);
+      label.appendChild(body);
+      li.appendChild(label);
+      list.appendChild(li);
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var t = T[state.lang];
+    var total = 0, done = 0;
+    t.items.forEach(function (_, i) {
+      if (!isActive(i)) return;
+      total++;
+      if (state.checked[i]) done++;
+    });
+    $('count').textContent = done + ' ' + t.of + ' ' + total + ' ' + t.done;
+    var seg = $('segments');
+    seg.innerHTML = '';
+    for (var s = 0; s < total; s++) {
+      var el = document.createElement('i');
+      if (s < done) el.className = 'on';
+      seg.appendChild(el);
+    }
+    $('closing').className = 'closing' + (done === total && total > 0 ? ' done' : '');
+  }
+
+  document.querySelectorAll('[data-lang]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.lang = b.getAttribute('data-lang');
+      save(); render();
+    });
+  });
+  document.querySelectorAll('#seasonSeg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.winter = b.getAttribute('data-winter') === '1';
+      save(); render();
+    });
+  });
+  $('reset').addEventListener('click', function () {
+    state.checked = {};
+    save(); render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
